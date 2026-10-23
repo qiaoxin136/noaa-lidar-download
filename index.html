@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NOAA Digital Coast LiDAR & DEM Download Agent</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  </head>
+  <body>
+    <header>
+      <h1>
+        <span>NOAA Digital Coast LiDAR &amp; DEM Agent</span>
+        <span class="badge">coast.noaa.gov/dataviewer</span>
+      </h1>
+      <div class="header-meta">
+        Default Email: <strong>fqiao@hazenandsawyer.com</strong>
+      </div>
+    </header>
+
+    <div id="statusBanner" class="status-banner">
+      <div id="statusText" class="status-text"></div>
+      <div id="progressWrap" class="progress-wrap" style="display:none;">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+      <div id="statusActions" class="status-actions"></div>
+    </div>
+
+    <div class="main">
+      <div class="sidebar">
+        <div class="section">
+          <h2>1. Upload GeoJSON AOI</h2>
+          <div class="dropzone" id="dropzone">
+            <input type="file" id="fileInput" accept=".geojson,.json" style="display:none" />
+            <div style="font-weight:600;margin-bottom:4px;">Click or Drop a .geojson / .json File Here</div>
+            <div style="font-size:11px;color:var(--muted);">
+              Supports WGS84 (EPSG:4326), NAD83(2011) (EPSG:6318), &amp; State Plane (EPSG:2881, EPSG:2264), Polygons, Pipes, or Points
+            </div>
+          </div>
+          <div class="row" style="margin-top:8px;">
+            <label style="margin:0;white-space:nowrap;">Source CRS:</label>
+            <input type="text" id="sourceCrs" placeholder="Auto-detect (e.g. EPSG:4326, EPSG:6318, EPSG:2881)" />
+          </div>
+          <div id="aoiStats" class="stats" style="display:none;"></div>
+        </div>
+
+        <div class="section">
+          <h2>2. Destination Folder &amp; Email</h2>
+          <label>Local Folder to Save Downloaded LiDAR / DEM Files (Required):</label>
+          <div class="row" style="margin-bottom:8px;">
+            <input type="text" id="outputDirDisplay" readonly placeholder="Click 'Select Folder...' to choose save folder" />
+            <button class="secondary" id="pickFolderBtn" type="button">Select Folder...</button>
+          </div>
+          <label>Email Address for NOAA Data Access Viewer:</label>
+          <input type="email" id="userEmail" value="fqiao@hazenandsawyer.com" />
+          <label>Max Direct S3 Tiles per Download (0 = all intersecting tiles):</label>
+          <input type="text" id="maxTiles" value="10" />
+        </div>
+
+        <div class="section">
+          <h2>3. Available NOAA LiDAR &amp; DEM Datasets</h2>
+          <div id="missionsList" style="font-size:12px;color:var(--muted);">
+            Upload a GeoJSON file above to search intersecting NOAA missions.
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>4. Activity &amp; Download Log</h2>
+          <div id="logBox">Ready. Upload a GeoJSON file and select a destination folder.</div>
+        </div>
+      </div>
+      <div id="map"></div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
